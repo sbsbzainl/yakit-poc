@@ -16,8 +16,8 @@ requests:
 
     matchers-condition: and
     matchers:
-      - type: regex
-        regex:
+      - type: word
+        words:
           - "ROOT_PATH"
         part: body
 
